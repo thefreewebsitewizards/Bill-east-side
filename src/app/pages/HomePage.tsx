@@ -9,7 +9,7 @@ export default function HomePage() {
       <section className="relative h-[90vh] min-h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <ImageWithFallback
-            src="/public/background.jpg"
+            src="/background.jpg"
             alt="Longboard hero"
             className="w-full h-full object-cover"
           />
