@@ -1,11 +1,33 @@
-import { useParams, Link } from 'react-router-dom';
-import { products } from '@/data/products';
+import { useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useProducts } from '@/app/hooks/useProducts';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
+import { useCart } from '@/app/hooks/useCart';
 
 export default function ProductDetailPage() {
   const { slug } = useParams();
+  const { products, loading, error } = useProducts();
   const product = products.find(p => p.slug === slug);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const { addItem } = useCart();
+  const navigate = useNavigate();
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg text-gray-600">Loading product...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-lg text-red-600">{error}</div>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -19,6 +41,13 @@ export default function ProductDetailPage() {
       </div>
     );
   }
+
+  const images = product.images?.length ? product.images : [product.image].filter(Boolean);
+  const activeImage = images[activeImageIndex] || product.image;
+  const handleOrder = () => {
+    addItem(product, 'complete', 1);
+    navigate('/cart');
+  };
 
   return (
     <div className="min-h-screen py-12">
@@ -36,10 +65,10 @@ export default function ProductDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
           {/* Product Image */}
           <div>
-            <div className="sticky top-24">
+            <div className="sticky top-24 space-y-4">
               <div className="relative rounded-lg overflow-hidden shadow-xl">
                 <ImageWithFallback
-                  src={product.image}
+                  src={activeImage}
                   alt={product.name}
                   className="w-full h-[600px] object-cover"
                 />
@@ -47,6 +76,26 @@ export default function ProductDetailPage() {
                   Made in USA
                 </div>
               </div>
+              {images.length > 1 && (
+                <div className="grid grid-cols-4 gap-3">
+                  {images.map((image, index) => (
+                    <button
+                      key={`${image}-${index}`}
+                      type="button"
+                      className={`relative overflow-hidden rounded-lg border ${
+                        index === activeImageIndex ? 'border-[#0C5A7D]' : 'border-gray-200'
+                      }`}
+                      onClick={() => setActiveImageIndex(index)}
+                    >
+                      <ImageWithFallback
+                        src={image}
+                        alt={`${product.name} ${index + 1}`}
+                        className="h-20 w-full object-cover"
+                      />
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 
@@ -163,12 +212,13 @@ export default function ProductDetailPage() {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4">
-              <Link
-                to="/custom"
+              <button
+                type="button"
                 className="flex-1 bg-[#0C5A7D] text-white text-center px-8 py-4 rounded-lg font-semibold hover:bg-[#0A4359] transition-all"
+                onClick={handleOrder}
               >
                 Order This Board
-              </Link>
+              </button>
               <Link
                 to="/custom"
                 className="flex-1 bg-white border-2 border-[#0C5A7D] text-[#0C5A7D] text-center px-8 py-4 rounded-lg font-semibold hover:bg-gray-50 transition-all"

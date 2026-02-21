@@ -1,7 +1,9 @@
-import { products } from '@/data/products';
+import { useProducts } from '@/app/hooks/useProducts';
 import { ProductCard } from '@/app/components/ProductCard';
 
 export default function ShopPage() {
+  const { products, loading, error } = useProducts();
+
   return (
     <div className="min-h-screen py-12">
       <div className="container mx-auto px-4">
@@ -40,11 +42,22 @@ export default function ShopPage() {
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        {loading && (
+          <div className="text-center text-gray-500 mb-12">Loading products...</div>
+        )}
+        {error && (
+          <div className="text-center text-red-600 mb-12">{error}</div>
+        )}
+        {!loading && !error && products.length === 0 && (
+          <div className="text-center text-gray-500 mb-12">No products available yet.</div>
+        )}
+        {!loading && !error && products.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        )}
 
         {/* Info Banner */}
         <div className="bg-[#0C5A7D] text-white rounded-lg p-8 text-center">

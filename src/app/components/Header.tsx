@@ -28,6 +28,9 @@ export function Header() {
             <Link to="/about" className="hover:text-[#0C5A7D] transition-colors">
               About
             </Link>
+            <Link to="/admin" className="hover:text-[#0C5A7D] transition-colors">
+              Admin
+            </Link>
           </div>
 
           <div className="flex items-center gap-3">
@@ -100,6 +103,9 @@ function MobileMenu({
           </Link>
           <Link to="/about" className="hover:text-[#0C5A7D] transition-colors" onClick={onClose}>
             About
+          </Link>
+          <Link to="/admin" className="hover:text-[#0C5A7D] transition-colors" onClick={onClose}>
+            Admin
           </Link>
         </div>
       </div>

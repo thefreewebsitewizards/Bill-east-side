@@ -6,6 +6,7 @@ export interface Product {
   completePrice: number;
   deckOnlyPrice: number;
   image: string;
+  images: string[];
   specs: {
     camber: string;
     concave: string;
@@ -28,6 +29,7 @@ export const products: Product[] = [
     completePrice: 275.00,
     deckOnlyPrice: 175.00,
     image: '/image0.jpeg',
+    images: ['/image0.jpeg'],
     specs: {
       camber: '1 1/2 inches',
       concave: '3/16 inches',
@@ -48,6 +50,7 @@ export const products: Product[] = [
     completePrice: 275.00,
     deckOnlyPrice: 175.00,
     image: '/image1.jpeg',
+    images: ['/image1.jpeg'],
     specs: {
       camber: '1 1/2 inches',
       concave: '3/16 inches',
@@ -67,6 +70,7 @@ export const products: Product[] = [
     completePrice: 275.00,
     deckOnlyPrice: 175.00,
     image: '/image2.jpeg',
+    images: ['/image2.jpeg'],
     specs: {
       camber: '1 1/2 inches',
       concave: '3/16 inches',
@@ -86,6 +90,7 @@ export const products: Product[] = [
     completePrice: 275.00,
     deckOnlyPrice: 175.00,
     image: '/image3.jpeg',
+    images: ['/image3.jpeg'],
     specs: {
       camber: '1 1/2 inches',
       concave: '3/16 inches',
@@ -105,6 +110,7 @@ export const products: Product[] = [
     completePrice: 275.00,
     deckOnlyPrice: 175.00,
     image: '/image4.jpeg',
+    images: ['/image4.jpeg'],
     specs: {
       camber: '1 1/2 inches',
       concave: '3/16 inches',
