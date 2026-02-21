@@ -1,7 +1,8 @@
 node_modules/
-dist/
-dist-ssr/
+
 .vite/
+
+Multi-tanent-firebase-projects/
 
 .env
 .env.*
